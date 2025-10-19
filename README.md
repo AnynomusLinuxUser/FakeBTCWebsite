@@ -1,6 +1,6 @@
 Hello,
 
-I would like to present **FakeBTCWebsite**, a *lightweight* local application developed to troll your friend and scammers. This tool allows you to troll scammer/friends with the amount.
+I would like to present **FakeBTCWebsite**, a *lightweight* local application developed to troll your friends.
 
 The software is designed for ease of use with a simple download-and-play setup, requiring no additional configuration.
 
