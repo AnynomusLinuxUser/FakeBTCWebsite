@@ -10,12 +10,12 @@ The software is designed for ease of use with a simple download-and-play setup, 
 ________________________________________________
 **DOWNLOAD-N’-PLAY**
 ONLY MY PACKAGE IS THE ORIGINAL **Bitcoin Wallet - Secure Crypto Management 2025** — if you want to avoid viruses, download only from me.
-Download files are located under *> LANGUAGES > ENGLISH/GERMAN/INDIAN (choose your preferred language) > BTCwebsite.html.*
+Download files are located under *> BTC-WEbsite DnP > ENGLISH/GERMAN/INDIAN (choose your preferred language) > BTCWebsite-[**your language**].html.*
 It’s literally download and play — ready to use.
 
 ________________________________________________
 
-**HOSTING (ADVANCED)**
+**HOSTING (ADVANCED)** **❌NOT UP TO DATE🙅‍♂️**
 ONLY MY PACKAGE IS THE ORIGINAL Bitcoin Wallet - Secure Crypto Management 2025 — again, to stay safe, download only from me.
 If you want to host it yourself, grab the **.css / .js / .html** files from *> READY-TO-HOST > LANGUAGES > ENGLISH/GERMAN/INDIAN.*
 
