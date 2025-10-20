@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Wallet - Sichere Krypto-Verwaltung 2025</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>₿</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-page" id="login-page">
+        <div class="login-container">
+            <div class="login-logo">
+                <i class="fab fa-bitcoin"></i>
+            </div>
+            <h1 class="login-title">Bitcoin Wallet</h1>
+            <p class="login-subtitle">Sichern Sie Ihre Krypto-Assets mit dem weltweit vertrauenswürdigsten Wallet</p>
+            
+            <form class="login-form" id="login-form">
+                <div class="form-group">
+                    <label class="form-label" for="username">Benutzername oder E-Mail</label>
+                    <input type="text" class="form-control" id="username" placeholder="Geben Sie Ihren Benutzernamen oder E-Mail ein" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Passwort</label>
+                    <input type="password" class="form-control" id="password" placeholder="Geben Sie Ihr Passwort ein" required>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-lock"></i> Auf Wallet zugreifen
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="app-container" id="app-container">
+        <div class="notifications" id="notifications"></div>
+        
+        <div class="success-animation" id="success-animation">
+            <div class="success-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="success-title" id="success-title">Erfolg!</div>
+                <div class="success-message" id="success-message">Ihre Operation wurde erfolgreich abgeschlossen.</div>
+                <button class="btn" id="success-ok">OK</button>
+            </div>
+        </div>
+        
+        <div class="transaction-error-menu" id="transaction-error-menu">
+            <div class="transaction-error-content">
+                <div class="transaction-error-header">
+                    <div class="transaction-error-title">
+                        <i class="fas fa-exclamation-triangle"></i> TRANSAKTIONSFEHLER
+                    </div>
+                </div>
+                
+                <div class="error-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                
+                <div class="transaction-error-body">
+                    <p>Ihre Transaktion konnte aufgrund eines Netzwerkfehlers nicht abgeschlossen werden.</p>
+                    <p>Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.</p>
+                    <div class="error-details" id="error-details">
+                        Fehlercode: 0x7B19F2A1<br>
+                        Netzwerk: Bitcoin Mainnet<br>
+                        Zeit: <span id="error-time"></span>
+                    </div>
+                </div>
+                
+                <div class="transaction-error-actions">
+                    <button class="transaction-error-btn transaction-error-retry" id="error-retry-btn">
+                        <i class="fas fa-redo"></i> Transaktion wiederholen
+                    </button>
+                    <button class="transaction-error-btn transaction-error-cancel" id="error-cancel-btn">
+                        <i class="fas fa-times"></i> Abbrechen
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="security-verification" id="security-verification">
+            <div class="security-content">
+                <div class="security-header">
+                    <div class="security-title">
+                        <i class="fas fa-shield-alt"></i> SICHERHEITSÜBERPRÜFUNG
+                    </div>
+                </div>
+                
+                <div class="error-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                
+                <div class="security-body">
+                    <p>Ihre Transaktion wurde für eine zusätzliche Sicherheitsüberprüfung markiert.</p>
+                    <p>Dieser Prozess schützt Ihre Gelder vor unbefugtem Zugriff.</p>
+                    
+                    <div class="queue-info">
+                        <div>Ihre Transaktion ist in der Warteschlange</div>
+                        <div class="queue-number" id="queue-number">#487</div>
+                        <div>Geschätzte Wartezeit: <span id="wait-time">5:00</span></div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar" id="security-progress-bar"></div>
+                    </div>
+                    
+                    <div class="timer" id="security-timer">Verarbeitung: <span id="time-remaining">5:00</span></div>
+                    
+                    <div class="scam-detected" id="scam-detected">
+                        <div class="scam-title">
+                            <i class="fas fa-skull-crossbones"></i> BETRÜGER ERKANNT
+                        </div>
+                        <div class="scam-message">
+                            Unser Sicherheitssystem hat verdächtige Aktivitäten in Verbindung mit der Empfängeradresse erkannt.<br>
+                            Die Adresse wurde geändert und könnte Teil eines Betrugsversuchs sein.
+                        </div>
+                        <div class="security-actions">
+                            <button class="security-btn security-continue" id="scam-continue-btn">
+                                <i class="fas fa-exclamation-triangle"></i> Trotzdem fortfahren
+                            </button>
+                            <button class="security-btn security-cancel" id="scam-cancel-btn">
+                                <i class="fas fa-times"></i> Transaktion abbrechen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="live-chat">
+            <div class="chat-window" id="chat-window">
+                <div class="chat-header">
+                    <div class="chat-title">Live-Chat-Support</div>
+                    <button class="chat-close" id="chat-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot">
+                        Hallo! Wie kann ich Ihnen heute helfen?
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="chat-input" placeholder="Geben Sie Ihre Nachricht ein...">
+                    <button id="chat-send">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="chat-toggle" id="chat-toggle">
+                <i class="fas fa-comments"></i>
+            </button>
+        </div>
+        
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
+                        <div class="logo-text">Bitcoin Wallet</div>
+                    </div>
+                    
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <nav>
+                        <ul id="nav-menu">
+                            <li><a href="#" class="active">Dashboard</a></li>
+                            <li><a href="#">Transaktionen</a></li>
+                            <li><a href="#">Kaufen/Verkaufen</a></li>
+                            <li><a href="#">Sicherheit</a></li>
+                            <li><a href="#">Einstellungen</a></li>
+                        </ul>
+                    </nav>
+                    
+                    <div class="user-actions">
+                        <button class="btn btn-outline" id="sync-btn">
+                            <i class="fas fa-sync-alt"></i> <span class="btn-text">Synchronisieren</span>
+                        </button>
+                        <button class="btn" id="wallet-btn">
+                            <i class="fas fa-wallet"></i> <span class="btn-text">Wallet</span>
+                        </button>
+                        <button class="btn btn-outline" id="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> <span class="btn-text">Abmelden</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="price-ticker">
+                <div class="price-info">
+                    <div class="price-label">Bitcoin Preis</div>
+                    <div class="price-value" id="btc-price">$110.804,00</div>
+                </div>
+                <div class="price-change positive" id="btc-change">
+                    <i class="fas fa-arrow-up"></i> <span id="btc-change-value">+2,4%</span>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="balance-card">
+                        <div class="balance-label">Gesamtbalance</div>
+                        <div class="balance-amount">
+                            <i class="fab fa-bitcoin"></i> <span id="btc-balance">10,253649</span>
+                        </div>
+                        <div class="balance-change">
+                            <i class="fas fa-arrow-up"></i> +0,1245 BTC (4,2%)
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <div class="action-btn send" id="send-action">
+                            <div class="action-icon">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                            <div class="action-label">Senden</div>
+                        </div>
+                        <div class="action-btn receive" id="receive-action">
+                            <div class="action-icon">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            <div class="action-label">Empfangen</div>
+                        </div>
+                        <div class="action-btn swap" id="swap-action">
+                            <div class="action-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="action-label">Tauschen</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Bitcoin Performance</div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="btc-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="card" id="transactions-section">
+                        <div class="card-header">
+                            <div class="card-title">Letzte Transaktionen</div>
+                            <button class="btn btn-outline" id="view-all-btn">
+                                <i class="fas fa-history"></i> <span class="btn-text">Alle anzeigen</span>
+                            </button>
+                        </div>
+                        <table class="transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Typ</th>
+                                    <th>Betrag</th>
+                                    <th>Adresse</th>
+                                    <th>Datum</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactions-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Bitcoin senden</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Bitcoin-Adresse des Empfängers</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" class="form-control" id="recipient-address" placeholder="bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh">
+                                <button class="btn btn-outline copy-btn" data-target="recipient-address">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Betrag (BTC)</label>
+                            <input type="text" class="form-control" id="send-amount" placeholder="0,001">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Netzwerkgebühr</label>
+                            <select class="form-control" id="fee-select">
+                                <option value="slow">Langsam (0,00001 BTC)</option>
+                                <option value="medium" selected>Mittel (0,00005 BTC)</option>
+                                <option value="fast">Schnell (0,0001 BTC)</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" id="send-btn">
+                                <i class="fas fa-paper-plane"></i> <span class="btn-text">Bitcoin senden</span>
+                            </button>
+                            <button class="btn btn-outline" id="cancel-btn">
+                                <span class="btn-text">Abbrechen</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Marktdaten</div>
+                        </div>
+                        <div class="market-data">
+                            <div class="market-item">
+                                <div class="market-label">24h Volumen</div>
+                                <div class="market-value" id="volume">$28,4B</div>
+                                <div class="market-change positive">
+                                    <i class="fas fa-arrow-up"></i> <span id="volume-change">+1,2%</span>
+                                </div>
+                            </div>
+                            <div class="market-item">
+                                <div class="market-label">Marktkapitalisierung</div>
+                                <div class="market-value" id="market-cap">$1,21B</div>
+                                <div class="market-change positive">
+                                    <i class="fas fa-arrow-up"></i> <span id="market-cap-change">+0,8%</span>
+                                </div>
+                            </div>
+                            <div class="market-item">
+                                <div class="market-label">Nächster Block</div>
+                                <div class="market-value">~8 min</div>
+                                <div class="market-change">
+                                    <i class="fas fa-clock"></i> Durchschnitt
+                                </div>
+                            </div>
+                            <div class="market-item">
+                                <div class="market-label">Hash-Rate</div>
+                                <div class="market-value">182 EH/s</div>
+                                <div class="market-change positive">
+                                    <i class="fas fa-arrow-up"></i> +1,2%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Bitcoin empfangen</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Ihre Bitcoin-Adresse</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" class="form-control" id="receive-address" value="bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq" readonly>
+                                <button class="btn btn-outline copy-btn" data-target="receive-address">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">QR-Code</label>
+                            <div class="qr-code">
+                                <div class="qr-placeholder">
+                                    <div class="qr-content">
+                                        <div class="qr-title">Bitcoin-Adresse</div>
+                                        <div class="qr-address">bc1qar0s...f5mdq</div>
+                                        <div class="qr-instruction">Zum Empfangen scannen</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-outline" id="new-address-btn">
+                                <i class="fas fa-plus"></i> <span class="btn-text">Neue Adresse</span>
+                            </button>
+                            <button class="btn copy-btn" data-target="receive-address">
+                                <i class="fas fa-copy"></i> <span class="btn-text">Adresse kopieren</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
+                        <div class="logo-text">Bitcoin Wallet</div>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#" id="footer-privacy">Datenschutzrichtlinie</a>
+                        <a href="#" id="footer-terms">Nutzungsbedingungen</a>
+                        <a href="#" id="footer-support">Support</a>
+                        <a href="#" id="footer-about">Über uns</a>
+                    </div>
+                    <div>© 2025 Bitcoin Wallet. Alle Rechte vorbehalten.</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
