@@ -1,0 +1,2312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Wallet - Secure Crypto Management 2025</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>₿</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --win-bg: #f3f3f3;
+            --win-surface: #ffffff;
+            --win-border: #e1e1e1;
+            --win-accent: #0078d4;
+            --win-accent-hover: #106ebe;
+            --win-text: #323130;
+            --win-text-light: #605e5c;
+            --win-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --win-radius: 8px;
+            --btc-orange: #f7931a;
+            --btc-orange-light: #f9aa4d;
+            --success: #107c10;
+            --danger: #d13438;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--win-bg);
+            color: var(--win-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .login-container {
+            background-color: var(--win-surface);
+            border-radius: var(--win-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .login-logo {
+            color: var(--btc-orange);
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .login-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--win-text);
+        }
+
+        .login-subtitle {
+            color: var(--win-text-light);
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--win-text);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--win-border);
+            border-radius: var(--win-radius);
+            font-size: 16px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--win-accent);
+            box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
+        }
+
+        .login-btn {
+            background-color: var(--btc-orange);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: var(--win-radius);
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background-color: var(--btc-orange-light);
+            transform: translateY(-2px);
+        }
+
+        .app-container {
+            display: none;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--win-surface);
+            border-bottom: 1px solid var(--win-border);
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--win-shadow);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            color: var(--btc-orange);
+            font-size: 28px;
+            animation: pulse 2s infinite;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+        }
+
+        nav a {
+            color: var(--win-text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: var(--win-radius);
+            transition: all 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(0, 120, 212, 0.1);
+            color: var(--win-accent);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--win-text);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn {
+            background-color: var(--win-accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--win-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: var(--win-accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--win-border);
+            color: var(--win-text);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-btc {
+            background-color: var(--btc-orange);
+        }
+
+        .btn-btc:hover {
+            background-color: var(--btc-orange-light);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #0d6b0d;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background-color: #c12b2f;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 24px;
+            padding: 24px 0;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .card {
+            background-color: var(--win-surface);
+            border-radius: var(--win-radius);
+            box-shadow: var(--win-shadow);
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--win-border);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 30px;
+            border-radius: var(--win-radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin-bottom: 24px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .balance-label {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 8px;
+        }
+
+        .balance-amount {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .balance-change {
+            font-size: 14px;
+            color: #4caf50;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .price-ticker {
+            background: linear-gradient(135deg, #0078d4 0%, #106ebe 100%);
+            color: white;
+            padding: 16px;
+            border-radius: var(--win-radius);
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideInRight 0.7s ease-out;
+        }
+
+        .price-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .price-value {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .price-change {
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            background-color: var(--win-surface);
+            border-radius: var(--win-radius);
+            box-shadow: var(--win-shadow);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .action-btn:hover {
+            border-color: var(--win-accent);
+            transform: translateY(-5px);
+        }
+
+        .action-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn:hover .action-icon i {
+            animation-duration: 0.5s;
+            animation-timing-function: ease-out;
+            animation-fill-mode: both;
+        }
+
+        .send .action-icon {
+            background-color: rgba(247, 147, 26, 0.1);
+            color: var(--btc-orange);
+        }
+
+        .receive .action-icon {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+
+        .swap .action-icon {
+            background-color: rgba(0, 120, 212, 0.1);
+            color: var(--win-accent);
+        }
+
+        .action-label {
+            font-weight: 500;
+        }
+
+        .chart-container {
+            height: 300px;
+            margin-bottom: 24px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .transactions-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .transactions-table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-weight: 600;
+            color: var(--win-text-light);
+            border-bottom: 1px solid var(--win-border);
+        }
+
+        .transactions-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--win-border);
+            transition: background-color 0.2s;
+        }
+
+        .transaction-row:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .transaction-type {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .type-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .received .type-icon {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+
+        .sent .type-icon {
+            background-color: rgba(209, 52, 56, 0.1);
+            color: var(--danger);
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+        }
+
+        .received .transaction-amount {
+            color: var(--success);
+        }
+
+        .sent .transaction-amount {
+            color: var(--danger);
+        }
+
+        .transaction-date {
+            color: var(--win-text-light);
+        }
+
+        .transaction-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-confirmed {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+
+        .status-pending {
+            background-color: rgba(247, 147, 26, 0.1);
+            color: var(--btc-orange);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .market-data {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .market-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 16px;
+            background-color: var(--win-surface);
+            border-radius: var(--win-radius);
+            box-shadow: var(--win-shadow);
+            transition: transform 0.3s;
+        }
+
+        .market-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .market-label {
+            font-size: 14px;
+            color: var(--win-text-light);
+        }
+
+        .market-value {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .market-change {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .positive {
+            color: var(--success);
+        }
+
+        .negative {
+            color: var(--danger);
+        }
+
+        .notifications {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 350px;
+        }
+
+        .notification {
+            background-color: white;
+            border-radius: var(--win-radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            animation: slideInRight 0.3s ease-out;
+            border-left: 4px solid var(--win-accent);
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .notification.success {
+            border-left-color: var(--success);
+        }
+
+        .notification.error {
+            border-left-color: var(--danger);
+        }
+
+        .notification.warning {
+            border-left-color: var(--btc-orange);
+        }
+
+        .notification-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notification-message {
+            font-size: 14px;
+            color: var(--win-text-light);
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: var(--win-text-light);
+            transition: color 0.2s;
+        }
+
+        .notification-close:hover {
+            color: var(--win-text);
+        }
+
+        .live-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--btc-orange);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            background-color: var(--btc-orange-light);
+        }
+
+        .chat-window {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background-color: white;
+            border-radius: var(--win-radius);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .chat-header {
+            background-color: var(--win-accent);
+            color: white;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background-color: var(--win-accent);
+            color: white;
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background-color: #f0f0f0;
+            color: var(--win-text);
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 16px;
+            border-top: 1px solid var(--win-border);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--win-border);
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chat-input button {
+            background: none;
+            border: none;
+            color: var(--win-accent);
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        .copy-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .copy-btn.copied {
+            background-color: var(--success) !important;
+            color: white;
+        }
+
+        .copy-btn.copied::after {
+            content: '✓ Copied!';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInOut 2s ease-out;
+        }
+
+        .success-animation {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-content {
+            background-color: white;
+            border-radius: var(--win-radius);
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            color: var(--success);
+            margin-bottom: 20px;
+            animation: bounce 1s ease-out;
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .success-message {
+            color: var(--win-text-light);
+            margin-bottom: 20px;
+        }
+
+        .transaction-error-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .transaction-error-content {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            animation: slideUp 0.4s ease-out;
+            color: white;
+            border: 2px solid #ff4444;
+            text-align: center;
+        }
+
+        .transaction-error-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ff4444;
+        }
+
+        .transaction-error-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff4444;
+        }
+
+        .transaction-error-body {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .transaction-error-body p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .error-details {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 14px;
+            border: 1px solid #444;
+        }
+
+        .transaction-error-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .transaction-error-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .transaction-error-retry {
+            background-color: #ff4444;
+            color: white;
+        }
+
+        .transaction-error-retry:hover {
+            background-color: #ff6666;
+            transform: translateY(-2px);
+        }
+
+        .transaction-error-cancel {
+            background-color: #666;
+            color: white;
+        }
+
+        .transaction-error-cancel:hover {
+            background-color: #888;
+            transform: translateY(-2px);
+        }
+
+        .error-icon {
+            font-size: 64px;
+            color: #ff4444;
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .security-verification {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 4000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .security-content {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.5);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            animation: slideUp 0.4s ease-out;
+            color: white;
+            border: 2px solid #ffaa00;
+            text-align: center;
+        }
+
+        .security-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ffaa00;
+        }
+
+        .security-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffaa00;
+        }
+
+        .security-body {
+            margin-bottom: 30px;
+        }
+
+        .security-body p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .queue-info {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #444;
+        }
+
+        .queue-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ff4444;
+            margin: 10px 0;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4444, #ffaa00);
+            width: 0%;
+            transition: width 0.5s;
+            border-radius: 10px;
+        }
+
+        .timer {
+            font-size: 18px;
+            color: #ccc;
+            margin: 10px 0;
+        }
+
+        .scam-detected {
+            display: none;
+            background-color: #2a2a2a;
+            border: 2px solid #ff4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .scam-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff4444;
+            margin-bottom: 15px;
+        }
+
+        .scam-message {
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .security-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .security-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .security-continue {
+            background-color: #ffaa00;
+            color: black;
+        }
+
+        .security-continue:hover {
+            background-color: #ffbb33;
+            transform: translateY(-2px);
+        }
+
+        .security-cancel {
+            background-color: #666;
+            color: white;
+        }
+
+        .security-cancel:hover {
+            background-color: #888;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: var(--win-surface);
+            border-top: 1px solid var(--win-border);
+            padding: 24px 0;
+            margin-top: 40px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--win-text-light);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--win-accent);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .send:hover .action-icon i {
+            animation: sendArrowHover 0.5s ease-out;
+        }
+
+        .receive:hover .action-icon i {
+            animation: receiveArrowHover 0.5s ease-out;
+        }
+
+        .swap:hover .action-icon i {
+            animation: swapArrowsHover 0.5s ease-out;
+        }
+
+        @keyframes sendArrowHover {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes receiveArrowHover {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes swapArrowsHover {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            nav {
+                width: 100%;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 8px;
+                display: none;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .balance-amount {
+                font-size: 28px;
+            }
+            
+            .market-data {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .user-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .btn .btn-text {
+                display: none;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+            }
+            
+            .notifications {
+                max-width: 90%;
+                right: 5%;
+            }
+            
+            .chat-window {
+                width: 90vw;
+                right: 5vw;
+            }
+            
+            .transaction-error-actions, .security-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 12px;
+            }
+            
+            .card {
+                padding: 16px;
+            }
+            
+            .balance-card {
+                padding: 20px;
+            }
+            
+            .balance-amount {
+                font-size: 24px;
+            }
+            
+            .action-btn {
+                padding: 16px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-page" id="login-page">
+        <div class="login-container">
+            <div class="login-logo">
+                <i class="fab fa-bitcoin"></i>
+            </div>
+            <h1 class="login-title">Bitcoin Wallet</h1>
+            <p class="login-subtitle">Secure your crypto assets with the world's most trusted wallet</p>
+            
+            <form class="login-form" id="login-form">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username or Email</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter your username or email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-lock"></i> Access My Wallet
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="app-container" id="app-container">
+        <div class="notifications" id="notifications"></div>
+        
+        <div class="success-animation" id="success-animation">
+            <div class="success-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="success-title" id="success-title">Success!</div>
+                <div class="success-message" id="success-message">Your operation was completed successfully.</div>
+                <button class="btn" id="success-ok">OK</button>
+            </div>
+        </div>
+        
+        <div class="transaction-error-menu" id="transaction-error-menu">
+            <div class="transaction-error-content">
+                <div class="transaction-error-header">
+                    <div class="transaction-error-title">
+                        <i class="fas fa-exclamation-triangle"></i> TRANSACTION ERROR
+                    </div>
+                </div>
+                
+                <div class="error-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                
+                <div class="transaction-error-body">
+                    <p>Your transaction could not be completed due to a network error.</p>
+                    <p>Please check your connection and try again.</p>
+                    <div class="error-details" id="error-details">
+                        Error Code: 0x7B19F2A1<br>
+                        Network: Bitcoin Mainnet<br>
+                        Time: <span id="error-time"></span>
+                    </div>
+                </div>
+                
+                <div class="transaction-error-actions">
+                    <button class="transaction-error-btn transaction-error-retry" id="error-retry-btn">
+                        <i class="fas fa-redo"></i> Retry Transaction
+                    </button>
+                    <button class="transaction-error-btn transaction-error-cancel" id="error-cancel-btn">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="security-verification" id="security-verification">
+            <div class="security-content">
+                <div class="security-header">
+                    <div class="security-title">
+                        <i class="fas fa-shield-alt"></i> SECURITY VERIFICATION
+                    </div>
+                </div>
+                
+                <div class="error-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                
+                <div class="security-body">
+                    <p>Your transaction has been flagged for additional security verification.</p>
+                    <p>This process helps protect your funds from unauthorized access.</p>
+                    
+                    <div class="queue-info">
+                        <div>Your transaction is in queue</div>
+                        <div class="queue-number" id="queue-number">#487</div>
+                        <div>Estimated wait time: <span id="wait-time">5:00</span></div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar" id="security-progress-bar"></div>
+                    </div>
+                    
+                    <div class="timer" id="security-timer">Processing: <span id="time-remaining">5:00</span></div>
+                    
+                    <div class="scam-detected" id="scam-detected">
+                        <div class="scam-title">
+                            <i class="fas fa-skull-crossbones"></i> SCAMMER DETECTED
+                        </div>
+                        <div class="scam-message">
+                            Our security system has detected suspicious activity associated with the recipient address.<br>
+                            The address has been modified and may be part of a scam attempt.
+                        </div>
+                        <div class="security-actions">
+                            <button class="security-btn security-continue" id="scam-continue-btn">
+                                <i class="fas fa-exclamation-triangle"></i> Continue Anyway
+                            </button>
+                            <button class="security-btn security-cancel" id="scam-cancel-btn">
+                                <i class="fas fa-times"></i> Cancel Transaction
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="live-chat">
+            <div class="chat-window" id="chat-window">
+                <div class="chat-header">
+                    <div class="chat-title">Live Chat Support</div>
+                    <button class="chat-close" id="chat-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot">
+                        Hello! How can I help you today?
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="chat-input" placeholder="Type your message...">
+                    <button id="chat-send">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="chat-toggle" id="chat-toggle">
+                <i class="fas fa-comments"></i>
+            </button>
+        </div>
+        
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
+                        <div class="logo-text">Bitcoin Wallet</div>
+                    </div>
+                    
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <nav>
+                        <ul id="nav-menu">
+                            <li><a href="#" class="active">Dashboard</a></li>
+                            <li><a href="#">Transactions</a></li>
+                            <li><a href="#">Buy/Sell</a></li>
+                            <li><a href="#">Security</a></li>
+                            <li><a href="#">Settings</a></li>
+                        </ul>
+                    </nav>
+                    
+                    <div class="user-actions">
+                        <button class="btn btn-outline" id="sync-btn">
+                            <i class="fas fa-sync-alt"></i> <span class="btn-text">Sync</span>
+                        </button>
+                        <button class="btn" id="wallet-btn">
+                            <i class="fas fa-wallet"></i> <span class="btn-text">Wallet</span>
+                        </button>
+                        <button class="btn btn-outline" id="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> <span class="btn-text">Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="price-ticker">
+                <div class="price-info">
+                    <div class="price-label">Bitcoin Price</div>
+                    <div class="price-value" id="btc-price">$110,804.00</div>
+                </div>
+                <div class="price-change positive" id="btc-change">
+                    <i class="fas fa-arrow-up"></i> <span id="btc-change-value">+2.4%</span>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="balance-card">
+                        <div class="balance-label">Total Balance</div>
+                        <div class="balance-amount">
+                            <i class="fab fa-bitcoin"></i> <span id="btc-balance">10.253649</span>
+                        </div>
+                        <div class="balance-change">
+                            <i class="fas fa-arrow-up"></i> +0.1245 BTC (4.2%)
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <div class="action-btn send" id="send-action">
+                            <div class="action-icon">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                            <div class="action-label">Send</div>
+                        </div>
+                        <div class="action-btn receive" id="receive-action">
+                            <div class="action-icon">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            <div class="action-label">Receive</div>
+                        </div>
+                        <div class="action-btn swap" id="swap-action">
+                            <div class="action-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="action-label">Swap</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Bitcoin Performance</div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="btc-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="card" id="transactions-section">
+                        <div class="card-header">
+                            <div class="card-title">Recent Transactions</div>
+                            <button class="btn btn-outline" id="view-all-btn">
+                                <i class="fas fa-history"></i> <span class="btn-text">View All</span>
+                            </button>
+                        </div>
+                        <table class="transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Address</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactions-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Send Bitcoin</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Recipient Bitcoin Address</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" class="form-control" id="recipient-address" placeholder="bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh">
+                                <button class="btn btn-outline copy-btn" data-target="recipient-address">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Amount (BTC)</label>
+                            <input type="text" class="form-control" id="send-amount" placeholder="0.001">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Network Fee</label>
+                            <select class="form-control" id="fee-select">
+                                <option value="slow">Slow (0.00001 BTC)</option>
+                                <option value="medium" selected>Medium (0.00005 BTC)</option>
+                                <option value="fast">Fast (0.0001 BTC)</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" id="send-btn">
+                                <i class="fas fa-paper-plane"></i> <span class="btn-text">Send Bitcoin</span>
+                            </button>
+                            <button class="btn btn-outline" id="cancel-btn">
+                                <span class="btn-text">Cancel</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Market Data</div>
+                        </div>
+                        <div class="market-data">
+                            <div class="market-item">
+                                <div class="market-label">24h Volume</div>
+                                <div class="market-value" id="volume">$28.4B</div>
+                                <div class="market-change positive">
+                                    <i class="fas fa-arrow-up"></i> <span id="volume-change">+1.2%</span>
+                                </div>
+                            </div>
+                            <div class="market-item">
+                                <div class="market-label">Market Cap</div>
+                                <div class="market-value" id="market-cap">$1.21T</div>
+                                <div class="market-change positive">
+                                    <i class="fas fa-arrow-up"></i> <span id="market-cap-change">+0.8%</span>
+                                </div>
+                            </div>
+                            <div class="market-item">
+                                <div class="market-label">Next Block</div>
+                                <div class="market-value">~8 min</div>
+                                <div class="market-change">
+                                    <i class="fas fa-clock"></i> Average
+                                </div>
+                            </div>
+                            <div class="market-item">
+                                <div class="market-label">Hash Rate</div>
+                                <div class="market-value">182 EH/s</div>
+                                <div class="market-change positive">
+                                    <i class="fas fa-arrow-up"></i> +1.2%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Receive Bitcoin</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Your Bitcoin Address</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" class="form-control" id="receive-address" value="bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq" readonly>
+                                <button class="btn btn-outline copy-btn" data-target="receive-address">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">QR Code</label>
+                            <div class="qr-code">
+                                <div class="qr-placeholder">
+                                    <div class="qr-content">
+                                        <div class="qr-title">Bitcoin Address</div>
+                                        <div class="qr-address">bc1qar0s...f5mdq</div>
+                                        <div class="qr-instruction">Scan to receive</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-outline" id="new-address-btn">
+                                <i class="fas fa-plus"></i> <span class="btn-text">New Address</span>
+                            </button>
+                            <button class="btn copy-btn" data-target="receive-address">
+                                <i class="fas fa-copy"></i> <span class="btn-text">Copy Address</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
+                        <div class="logo-text">Bitcoin Wallet</div>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#" id="footer-privacy">Privacy Policy</a>
+                        <a href="#" id="footer-terms">Terms of Service</a>
+                        <a href="#" id="footer-support">Support</a>
+                        <a href="#" id="footer-about">About Us</a>
+                    </div>
+                    <div>© 2025 Bitcoin Wallet. All rights reserved.</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const transactions = [
+            {
+                id: 1,
+                type: 'received',
+                amount: 2.5,
+                address: 'bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq',
+                date: '2025-01-15 14:30',
+                status: 'confirmed'
+            },
+            {
+                id: 2,
+                type: 'sent',
+                amount: 1.2,
+                address: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
+                date: '2025-01-14 11:22',
+                status: 'confirmed'
+            },
+            {
+                id: 3,
+                type: 'received',
+                amount: 5.0,
+                address: '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy',
+                date: '2025-01-12 09:15',
+                status: 'confirmed'
+            },
+            {
+                id: 4,
+                type: 'sent',
+                amount: 0.5,
+                address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
+                date: '2025-01-10 16:45',
+                status: 'confirmed'
+            },
+            {
+                id: 5,
+                type: 'received',
+                amount: 3.8,
+                address: '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2',
+                date: '2025-01-08 13:20',
+                status: 'pending'
+            }
+        ];
+
+        let walletBalance = 10.253649;
+        let btcPrice = 110804.00;
+        let btcChange = 2.4;
+        let btcChart = null;
+        let priceUpdateInterval;
+        let retryCount = 0;
+        let originalAddress = "";
+
+        function showTransactionErrorMenu() {
+            const errorMenu = document.getElementById('transaction-error-menu');
+            const errorTime = document.getElementById('error-time');
+            
+            const now = new Date();
+            errorTime.textContent = now.toLocaleTimeString();
+            
+            errorMenu.style.display = 'flex';
+        }
+
+        function showSecurityVerification() {
+            const securityMenu = document.getElementById('security-verification');
+            securityMenu.style.display = 'flex';
+            
+            startSecurityTimer();
+        }
+
+        function startSecurityTimer() {
+            const progressBar = document.getElementById('security-progress-bar');
+            const timeRemaining = document.getElementById('time-remaining');
+            const waitTime = document.getElementById('wait-time');
+            
+            let seconds = 300;
+            const interval = setInterval(() => {
+                seconds--;
+                
+                const minutes = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                const timeString = `${minutes}:${secs.toString().padStart(2, '0')}`;
+                
+                timeRemaining.textContent = timeString;
+                waitTime.textContent = timeString;
+                
+                const progress = ((300 - seconds) / 300) * 100;
+                progressBar.style.width = `${progress}%`;
+                
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    document.getElementById('scam-detected').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        function showNotification(title, message, type = 'info', duration = 5000) {
+            const notifications = document.getElementById('notifications');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            let icon = 'fas fa-info-circle';
+            if (type === 'success') icon = 'fas fa-check-circle';
+            if (type === 'error') icon = 'fas fa-exclamation-circle';
+            if (type === 'warning') icon = 'fas fa-exclamation-triangle';
+            
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="${icon}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${message}</div>
+                </div>
+                <button class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            notifications.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.transform = 'translateX(100%)';
+                    notification.style.opacity = '0';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }
+            }, duration);
+            
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => {
+                notification.style.transform = 'translateX(100%)';
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            });
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        function formatAddress(address) {
+            return `${address.substring(0, 10)}...${address.substring(address.length - 6)}`;
+        }
+
+        function updateBalance() {
+            document.getElementById('btc-balance').textContent = walletBalance.toFixed(6);
+        }
+
+        async function fetchBitcoinData() {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true&include_market_cap=true&include_24hr_vol=true');
+                const data = await response.json();
+                
+                if (data.bitcoin) {
+                    const bitcoin = data.bitcoin;
+                    btcPrice = bitcoin.usd;
+                    btcChange = bitcoin.usd_24h_change;
+                    
+                    document.getElementById('btc-price').textContent = `$${btcPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                    
+                    const changeElement = document.getElementById('btc-change');
+                    
+                    if (btcChange >= 0) {
+                        changeElement.innerHTML = `<i class="fas fa-arrow-up"></i> <span id="btc-change-value">+${btcChange.toFixed(2)}%</span>`;
+                        changeElement.className = 'price-change positive';
+                    } else {
+                        changeElement.innerHTML = `<i class="fas fa-arrow-down"></i> <span id="btc-change-value">${btcChange.toFixed(2)}%</span>`;
+                        changeElement.className = 'price-change negative';
+                    }
+                    
+                    document.getElementById('volume').textContent = `$${(bitcoin.usd_24h_vol / 1000000000).toFixed(1)}B`;
+                    document.getElementById('market-cap').textContent = `$${(bitcoin.usd_market_cap / 1000000000000).toFixed(2)}T`;
+                    
+                    updateChartWithNewPrice();
+                    
+                    return bitcoin;
+                }
+            } catch (error) {
+                simulateBitcoinData();
+            }
+        }
+
+        function simulateBitcoinData() {
+            const change = (Math.random() - 0.5) * 4;
+            const newPrice = btcPrice * (1 + change / 100);
+            const newChange = btcChange + change;
+            
+            btcPrice = newPrice;
+            btcChange = newChange;
+            
+            document.getElementById('btc-price').textContent = `$${btcPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            
+            const changeElement = document.getElementById('btc-change');
+            
+            if (btcChange >= 0) {
+                changeElement.innerHTML = `<i class="fas fa-arrow-up"></i> <span id="btc-change-value">+${btcChange.toFixed(2)}%</span>`;
+                changeElement.className = 'price-change positive';
+            } else {
+                changeElement.innerHTML = `<i class="fas fa-arrow-down"></i> <span id="btc-change-value">${btcChange.toFixed(2)}%</span>`;
+                changeElement.className = 'price-change negative';
+            }
+            
+            document.getElementById('volume').textContent = `$${(28.4 + (Math.random() - 0.5) * 2).toFixed(1)}B`;
+            document.getElementById('market-cap').textContent = `$${(1.21 + (Math.random() - 0.5) * 0.1).toFixed(2)}T`;
+            
+            updateChartWithNewPrice();
+        }
+
+        function initBitcoinChart() {
+            const ctx = document.getElementById('btc-chart').getContext('2d');
+            
+            const dates = [];
+            const prices = [];
+            let currentPrice = btcPrice * 0.9;
+            
+            for (let i = 30; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                dates.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+                
+                currentPrice += (Math.random() - 0.3) * 2000;
+                if (currentPrice < btcPrice * 0.7) currentPrice = btcPrice * 0.7;
+                if (currentPrice > btcPrice * 1.3) currentPrice = btcPrice * 1.3;
+                prices.push(currentPrice);
+            }
+            
+            prices[prices.length - 1] = btcPrice;
+            
+            btcChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Bitcoin Price (USD)',
+                        data: prices,
+                        borderColor: '#f7931a',
+                        backgroundColor: 'rgba(247, 147, 26, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#f7931a',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 3,
+                        pointHoverRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            borderColor: '#f7931a',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    return `$${context.parsed.y.toLocaleString()}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 8
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    animations: {
+                        tension: {
+                            duration: 1000,
+                            easing: 'linear'
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateChartWithNewPrice() {
+            if (btcChart) {
+                const newPrice = btcPrice * (0.995 + Math.random() * 0.01);
+                btcChart.data.datasets[0].data.push(newPrice);
+                
+                const now = new Date();
+                btcChart.data.labels.push(now.toLocaleTimeString());
+                
+                if (btcChart.data.datasets[0].data.length > 20) {
+                    btcChart.data.datasets[0].data.shift();
+                    btcChart.data.labels.shift();
+                }
+                
+                btcChart.update('active');
+            }
+        }
+
+        function renderTransactions() {
+            const tbody = document.getElementById('transactions-body');
+            tbody.innerHTML = '';
+
+            transactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.className = `transaction-row ${transaction.type}`;
+
+                const typeIcon = transaction.type === 'received' ? 
+                    '<i class="fas fa-arrow-down"></i>' : 
+                    '<i class="fas fa-arrow-up"></i>';
+
+                const typeText = transaction.type === 'received' ? 'Received' : 'Sent';
+
+                const statusClass = transaction.status === 'confirmed' ? 
+                    'status-confirmed' : 'status-pending';
+
+                const statusText = transaction.status === 'confirmed' ? 
+                    'Confirmed' : 'Pending';
+
+                row.innerHTML = `
+                    <td>
+                        <div class="transaction-type">
+                            <div class="type-icon ${transaction.type}">
+                                ${typeIcon}
+                            </div>
+                            ${typeText}
+                        </div>
+                    </td>
+                    <td class="transaction-amount ${transaction.type}">
+                        ${transaction.type === 'received' ? '+' : '-'} ${transaction.amount.toFixed(6)} BTC
+                    </td>
+                    <td>${formatAddress(transaction.address)}</td>
+                    <td class="transaction-date">${formatDate(transaction.date)}</td>
+                    <td><span class="transaction-status ${statusClass}">${statusText}</span></td>
+                `;
+
+                tbody.appendChild(row);
+            });
+        }
+
+        document.getElementById('chat-toggle').addEventListener('click', function() {
+            const chatWindow = document.getElementById('chat-window');
+            chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        document.getElementById('chat-close').addEventListener('click', function() {
+            document.getElementById('chat-window').style.display = 'none';
+        });
+
+        document.getElementById('chat-send').addEventListener('click', function() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            
+            if (message) {
+                addMessage(message, 'user');
+                input.value = '';
+                
+                setTimeout(() => {
+                    const responses = [
+                        "I understand your question. Let me check that for you.",
+                        "Thanks for reaching out! Our support team will contact you shortly.",
+                        "I can help you with that. Could you provide more details?",
+                        "That's a great question! Let me find the best solution for you."
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addMessage(randomResponse, 'bot');
+                }, 1000);
+            }
+        });
+
+        function addMessage(text, sender) {
+            const messages = document.getElementById('chat-messages');
+            const message = document.createElement('div');
+            message.className = `message ${sender}`;
+            message.textContent = text;
+            messages.appendChild(message);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    targetElement.select();
+                    navigator.clipboard.writeText(targetElement.value);
+                    
+                    this.classList.add('copied');
+                    setTimeout(() => {
+                        this.classList.remove('copied');
+                    }, 2000);
+                    
+                    showNotification('Copied', 'Address copied to clipboard', 'success');
+                }
+            });
+        });
+
+        function showSuccess(title, message) {
+            const successAnimation = document.getElementById('success-animation');
+            const successTitle = document.getElementById('success-title');
+            const successMessage = document.getElementById('success-message');
+            
+            successTitle.textContent = title;
+            successMessage.textContent = message;
+            successAnimation.style.display = 'flex';
+            
+            document.getElementById('success-ok').addEventListener('click', function() {
+                successAnimation.style.display = 'none';
+            });
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const loginBtn = this.querySelector('.login-btn');
+            const originalText = loginBtn.innerHTML;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Accessing Wallet...';
+            loginBtn.disabled = true;
+            
+            setTimeout(() => {
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('app-container').style.display = 'block';
+                
+                initializeApp();
+                
+                showNotification('Welcome to Bitcoin Wallet', 'Your wallet with 10.25 BTC is now accessible.', 'success');
+            }, 1500);
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            clearInterval(priceUpdateInterval);
+            
+            document.getElementById('app-container').style.display = 'none';
+            document.getElementById('login-page').style.display = 'flex';
+            
+            document.getElementById('login-form').reset();
+            const loginBtn = document.querySelector('.login-btn');
+            loginBtn.innerHTML = '<i class="fas fa-lock"></i> Access My Wallet';
+            loginBtn.disabled = false;
+            
+            showNotification('Logged Out', 'You have been successfully logged out.', 'info');
+        });
+
+        function initializeApp() {
+            renderTransactions();
+            updateBalance();
+            initBitcoinChart();
+            
+            startRealTimePriceUpdates();
+            
+            setTimeout(() => {
+                showNotification('Real-time Data Active', 'Bitcoin prices are now updating in real-time.', 'info');
+            }, 2000);
+        }
+
+        function startRealTimePriceUpdates() {
+            fetchBitcoinData();
+            
+            priceUpdateInterval = setInterval(fetchBitcoinData, 30000);
+        }
+
+        document.getElementById('send-btn').addEventListener('click', function() {
+            const recipient = document.getElementById('recipient-address').value;
+            const amount = document.getElementById('send-amount').value;
+            const feeSelect = document.getElementById('fee-select');
+            const feeValue = feeSelect.options[feeSelect.selectedIndex].value;
+
+            if (!recipient) {
+                showNotification('Error', 'Please enter a recipient Bitcoin address.', 'error');
+                return;
+            }
+
+            if (!amount || isNaN(parseFloat(amount)) || parseFloat(amount) <= 0) {
+                showNotification('Error', 'Please enter a valid amount.', 'error');
+                return;
+            }
+
+            const sendAmount = parseFloat(amount);
+            
+            let fee = 0.00005;
+            if (feeValue === 'slow') {
+                fee = 0.00001;
+            } else if (feeValue === 'fast') {
+                fee = 0.0001;
+            }
+
+            const totalAmount = sendAmount + fee;
+
+            if (totalAmount > walletBalance) {
+                showNotification('Insufficient Funds', `You don't have enough Bitcoin to complete this transaction. You need ${totalAmount.toFixed(6)} BTC but only have ${walletBalance.toFixed(6)} BTC.`, 'error');
+                return;
+            }
+
+            if (retryCount === 0) {
+                originalAddress = recipient;
+            }
+
+            if (retryCount >= 2) {
+                document.getElementById('transaction-error-menu').style.display = 'none';
+                showSecurityVerification();
+            } else {
+                showTransactionErrorMenu();
+            }
+        });
+
+        document.getElementById('error-retry-btn').addEventListener('click', function() {
+            document.getElementById('transaction-error-menu').style.display = 'none';
+            retryCount++;
+            
+            if (retryCount >= 2) {
+                const addressInput = document.getElementById('recipient-address');
+                if (originalAddress && originalAddress.length > 10) {
+                    addressInput.value = originalAddress.substring(0, originalAddress.length - 1);
+                }
+            }
+            
+            showNotification('Retrying Transaction', 'Your transaction is being retried.', 'info');
+        });
+        
+        document.getElementById('error-cancel-btn').addEventListener('click', function() {
+            document.getElementById('transaction-error-menu').style.display = 'none';
+            showNotification('Transaction Cancelled', 'The transaction has been cancelled.', 'info');
+        });
+
+        document.getElementById('scam-continue-btn').addEventListener('click', function() {
+            document.getElementById('security-verification').style.display = 'none';
+            
+            const now = new Date();
+            const dateString = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            const sendAmount = parseFloat(document.getElementById('send-amount').value);
+            
+            transactions.unshift({
+                id: transactions.length + 1,
+                type: 'sent',
+                amount: sendAmount,
+                address: document.getElementById('recipient-address').value,
+                date: dateString,
+                status: 'confirmed'
+            });
+
+            walletBalance -= sendAmount;
+            updateBalance();
+            renderTransactions();
+
+            document.getElementById('recipient-address').value = '';
+            document.getElementById('send-amount').value = '';
+            
+            retryCount = 0;
+            
+            showSuccess('Transaction Complete', 'Your Bitcoin transaction has been successfully processed and confirmed on the blockchain.');
+        });
+
+        document.getElementById('scam-cancel-btn').addEventListener('click', function() {
+            document.getElementById('security-verification').style.display = 'none';
+            showNotification('Transaction Cancelled', 'The transaction was cancelled for security reasons.', 'warning');
+            retryCount = 0;
+        });
+
+        document.getElementById('send-action').addEventListener('click', function() {
+            document.getElementById('recipient-address').focus();
+        });
+
+        document.getElementById('receive-action').addEventListener('click', function() {
+            document.getElementById('receive-address').focus();
+            document.getElementById('receive-address').select();
+        });
+
+        document.getElementById('swap-action').addEventListener('click', function() {
+            showNotification('Swap Feature', 'The swap feature will be available soon.', 'info');
+        });
+
+        document.getElementById('sync-btn').addEventListener('click', function() {
+            showNotification('Synchronizing', 'Your wallet is synchronizing with the Bitcoin network. This may take a few moments...', 'info');
+            setTimeout(() => {
+                showNotification('Synchronization Complete', 'Your wallet is now fully synchronized with the latest blockchain data.', 'success');
+            }, 2000);
+        });
+
+        document.getElementById('wallet-btn').addEventListener('click', function() {
+            showNotification('Wallet Information', `Balance: ${walletBalance.toFixed(6)} BTC\n\nThis is a non-custodial wallet. You control your private keys.`, 'info');
+        });
+
+        document.getElementById('view-all-btn').addEventListener('click', function() {
+            showNotification('All Transactions', 'Viewing complete transaction history. Use the search and filter options to find specific transactions.', 'info');
+        });
+
+        document.getElementById('cancel-btn').addEventListener('click', function() {
+            document.getElementById('recipient-address').value = '';
+            document.getElementById('send-amount').value = '';
+            showNotification('Cancelled', 'The transaction form has been cleared.', 'info');
+        });
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
