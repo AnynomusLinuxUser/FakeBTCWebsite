@@ -20,7 +20,10 @@ ________________________________________________
 
 **HOSTING (ADVANCED)** **❌NOT UP TO DATE🙅‍♂️**
 ONLY MY PACKAGE IS THE ORIGINAL Bitcoin Wallet - Secure Crypto Management 2025 — again, to stay safe, download only from me.
-If you want to host it yourself, grab the **.css / .js / .html** files from
+If you want to host it yourself, grab the:
+
+
+**.css / .js / .html** files from
 
 
 *> READY-TO-HOST > LANGUAGES > ENGLISH/GERMAN/INDIAN.*
@@ -35,7 +38,9 @@ THE LOGIN IS FAKE, YOU CAN ENTER ANY CREDENTIALS YOU WANT. ON THE RIGHT HAND SID
 
 ________________________________________________
 
-**PICTURES*+
+**PICTURES**
+
+
 <img width="394" height="556" alt="image" src="https://github.com/user-attachments/assets/a3847942-20c3-4021-bc65-cd3a262f6930" />
 <img width="1390" height="863" alt="image" src="https://github.com/user-attachments/assets/540650b0-d15b-4e70-ba3b-98a1a50ef14c" />
 <img width="1186" height="458" alt="image" src="https://github.com/user-attachments/assets/58a645ea-2461-49ec-a159-f732566e1316" />
@@ -44,7 +49,11 @@ ________________________________________________
 
 
 
+________________________________________________
 
 **SECURITY ADVICE 🚨: IF YOU TROLL SOMEONE YOU SHOULD RUN THIS CODE IN A VIRTUAL-BOX FOR YOUR SAFETY. I´m NOT RESPONSIBLE FOR ANY DAMAGES ON YOUR SYSTEM**
 
+________________________________________________
+
 **Please Note: This project is intended for educational, research, and demonstration purposes only. I, the developer assumes no responsibility for any misuse of this software.**
+
