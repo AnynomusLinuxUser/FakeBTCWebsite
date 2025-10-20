@@ -33,6 +33,15 @@ ________________________________________________
 THE LOGIN IS FAKE, YOU CAN ENTER ANY CREDENTIALS YOU WANT. ON THE RIGHT HAND SIDE OF THE *FakeBTCWebsite* YOU CAN SEEN AN SEND BOX: IT IS IMPROTANT THAT YOU USE THIS, THERE YOU GIVE IN THE WALLET ADRESS AND THE AMOUNT YOU WANT  TO SEND. YOU NEED TO CLICK ON IT 3 TIMES, AND THEN STARTS THE TROLL. I HOPE YOU'RE TROLL IS GOING TO BE SUCESSFUL✅
 <img width="1473" height="926" alt="Screenshot 2025-10-20 185502" src="https://github.com/user-attachments/assets/1c3e1f61-9041-4ccc-9c95-d3bc114e1942" />
 
+________________________________________________
+
+**PICTURES*+
+<img width="394" height="556" alt="image" src="https://github.com/user-attachments/assets/a3847942-20c3-4021-bc65-cd3a262f6930" />
+<img width="1390" height="863" alt="image" src="https://github.com/user-attachments/assets/540650b0-d15b-4e70-ba3b-98a1a50ef14c" />
+<img width="1186" height="458" alt="image" src="https://github.com/user-attachments/assets/58a645ea-2461-49ec-a159-f732566e1316" />
+
+
+
 
 
 
